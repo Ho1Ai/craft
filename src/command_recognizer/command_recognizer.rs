@@ -40,26 +40,20 @@ pub fn recognize_command(input_vec: Vec<String>) -> default_structures::Recogniz
 }
 
 pub fn inner_runtime (input_struct: default_structures::RecognizedCommand) {
-    let mut request_list = String::new();
+    if input_struct.unsplit_fields[0].clone() == "-i".to_string() {
+        let mut packages_list = Vec::<String>::new();
+        let mut start_skip = true;
 
-    let mut start_skip = true;
-    let mut first_elem_skip = true;
-    let str_arr = input_struct.unsplit_fields.clone();
-    for elem in str_arr.clone() {
-        if start_skip { // skips -i flag
-            start_skip = false;
-            continue;
-        } else if first_elem_skip {
-            first_elem_skip = false;
-        } else {
-        request_list.push_str(",");
+        for elem in input_struct.unsplit_fields {
+            if start_skip {
+                start_skip = false;
+                continue;
+            } else {
+                packages_list.push(elem);
+            }
         }
 
-        request_list.push_str(&elem);
-    }
-
-    if input_struct.unsplit_fields[0].clone() == "-i".to_string() {
-        install::install_start(request_list);
+        install::install_start(packages_list);
     }
 }
 

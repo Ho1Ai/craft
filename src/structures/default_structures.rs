@@ -1,6 +1,6 @@
 use serde::{ Serialize, Deserialize };
-use crate::structures;
 
+// tbh, unnecessary struct
 pub struct RequestStructure {
     pub packages: Vec<String>,
 }
@@ -18,7 +18,20 @@ pub struct RecognizedCommand {
     pub unsplit_fields: Vec<String>,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone)]
+pub struct SinglePkg {
+    pub id: i64,
+    pub name: String,
+    pub version: String,
+    pub pkg_size: usize
+}
+
+#[derive(Deserialize, Debug, Clone)]
 pub struct FetchDataResponse {
-    pub packages: Vec<String>,
+    pub packages: Vec<SinglePkg>,
+}
+
+#[derive(Deserialize, Debug)]
+pub struct PkgExistence{
+    pub existence: bool
 }
