@@ -35,3 +35,8 @@ pub struct FetchDataResponse {
 pub struct PkgExistence{
     pub existence: bool
 }
+
+#[derive(Deserialize, Debug)]
+pub struct DependenciesList{
+    pub packages: Vec<String>
+}
